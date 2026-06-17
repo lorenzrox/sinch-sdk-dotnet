@@ -188,12 +188,10 @@ namespace Sinch
 
             _sms = InitSms(optionsObj, httpSnakeCaseOAuth);
 
-            var conversationBaseAddress =
-                _urlResolver.ResolveConversationUrl(optionsObj.ConversationRegion);
+            var conversationBaseAddress = _urlResolver.ResolveConversationUrl(optionsObj.ConversationRegion);
             var templatesBaseAddress = _urlResolver.ResolveTemplateUrl(optionsObj.ConversationRegion);
-            _conversation = new SinchConversationClient(_projectId!, conversationBaseAddress
-                , templatesBaseAddress,
-                _loggerFactory, httpSnakeCaseOAuth);
+            var batchBaseAddress = _urlResolver.ResolveConversationBatchUrl(optionsObj.ConversationRegion);
+            _conversation = new SinchConversationClient(_projectId!, conversationBaseAddress, templatesBaseAddress, batchBaseAddress, _loggerFactory, httpSnakeCaseOAuth);
 
             var faxUrl = _urlResolver.ResolveFaxUrl(optionsObj.FaxRegion);
             _fax = new FaxClient(projectId!, faxUrl, _loggerFactory, httpCamelCase);

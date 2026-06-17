@@ -23,6 +23,14 @@ namespace Sinch.Core
                                conversationRegion.Value));
         }
 
+        public Uri ResolveConversationBatchUrl(ConversationRegion conversationRegion)
+        {
+            const string conversationApiUrlTemplate = "https://{0}.conversationbatch.api.sinch.com/";
+            return new Uri(_apiUrlOverrides?.ConversationUrl ??
+                           string.Format(conversationApiUrlTemplate,
+                               conversationRegion.Value));
+        }
+
         public Uri ResolveTemplateUrl(ConversationRegion conversationRegion)
         {
             const string templatesApiUrlTemplate = "https://{0}.template.api.sinch.com/";

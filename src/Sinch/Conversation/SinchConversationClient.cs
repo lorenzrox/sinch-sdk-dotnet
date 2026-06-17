@@ -12,6 +12,7 @@ using Sinch.Conversation.TemplatesV2;
 using Sinch.Conversation.Webhooks;
 using Sinch.Core;
 using Sinch.Logger;
+using Sinch.Conversation.Batches;
 
 namespace Sinch.Conversation
 {
@@ -53,6 +54,9 @@ namespace Sinch.Conversation
         /// <inheritdoc cref="ISinchConversationTemplatesV1" />
         ISinchConversationTemplatesV1 TemplatesV1 { get; }
 
+        /// <inheritdoc cref="ISinchConversationBatches" />
+        ISinchConversationBatches Batches { get; }
+
         /// <summary>
         ///     For internal use, JsonSerializerOption to be utilized for serialization and deserialization of all Conversation models
         /// </summary>
@@ -62,8 +66,7 @@ namespace Sinch.Conversation
     /// <inheritdoc />
     internal sealed class SinchConversationClient : ISinchConversation
     {
-        internal SinchConversationClient(string projectId, Uri conversationBaseAddress, Uri templatesBaseAddress
-            , LoggerFactory? loggerFactory, IHttp http)
+        internal SinchConversationClient(string projectId, Uri conversationBaseAddress, Uri templatesBaseAddress, Uri batchBaseAddress, LoggerFactory? loggerFactory, IHttp http)
         {
             JsonSerializerOptions = http.JsonSerializerOptions;
             Messages = new Messages.Messages(projectId, conversationBaseAddress,
@@ -86,6 +89,8 @@ namespace Sinch.Conversation
                 loggerFactory?.Create<ISinchConversationTemplatesV2>(), http);
             TemplatesV1 = new TemplatesV1.TemplatesV1(projectId, templatesBaseAddress,
                 loggerFactory?.Create<ISinchConversationTemplatesV1>(), http);
+            Batches = new Batches.Batches(projectId, batchBaseAddress,
+                loggerFactory?.Create<ISinchConversationBatches>(), http);
         }
 
         /// <inheritdoc />
@@ -115,7 +120,11 @@ namespace Sinch.Conversation
         /// <inheritdoc />
         public ISinchConversationTemplatesV2 TemplatesV2 { get; }
 
+        /// <inheritdoc />
         public ISinchConversationTemplatesV1 TemplatesV1 { get; }
+
+        /// <inheritdoc />
+        public ISinchConversationBatches Batches { get; }
 
         public JsonSerializerOptions JsonSerializerOptions { get; }
     }
