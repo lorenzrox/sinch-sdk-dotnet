@@ -15,6 +15,7 @@ namespace Sinch.Conversation.Batches.Send
 #endif
 
         [JsonPropertyName("parameters")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Dictionary<string, string>? Parameters { get; set; }
 
         [JsonPropertyName("message_metadata")]
