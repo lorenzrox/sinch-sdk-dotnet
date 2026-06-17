@@ -1,4 +1,5 @@
 using Sinch.Conversation.Common;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Sinch.Conversation.Batches.Send
@@ -12,6 +13,17 @@ namespace Sinch.Conversation.Batches.Send
 #else
         public IRecipient Recipient { get; set; } = null!;
 #endif
+
+        [JsonPropertyName("parameters")]
+        public Dictionary<string, string>? Parameters { get; set; }
+
+        [JsonPropertyName("message_metadata")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public Dictionary<string, string>? MessageMetadata { get; set; }
+
+        [JsonPropertyName("conversation_metadata")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public Dictionary<string, string>? ConversationMetadata { get; set; }
     }
 
 }
